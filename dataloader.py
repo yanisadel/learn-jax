@@ -17,6 +17,10 @@ def preprocess_sample(img, label):
     return (tf.cast(img, tf.float32) / 255.0), label
 
 
+def preprocess_data(data, batch_size=32):
+    return tfds.as_numpy(data.map(preprocess_sample).batch(batch_size).prefetch(1))
+
+
 def get_data_info(info):
     height, width, channels = info.features["image"].shape
     num_pixels = height * width * channels
