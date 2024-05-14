@@ -1,3 +1,4 @@
+import tensorflow as tf
 import tensorflow_datasets as tfds
 
 
@@ -10,3 +11,7 @@ def load_unprocessed_mnist_data():
     data_test = data["test"]
 
     return data_train, data_test, info
+
+
+def preprocess_data(img, label):
+    return (tf.cast(img, tf.float32) / 255.0), label
