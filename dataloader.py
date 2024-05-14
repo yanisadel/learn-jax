@@ -15,3 +15,10 @@ def load_unprocessed_mnist_data():
 
 def preprocess_data(img, label):
     return (tf.cast(img, tf.float32) / 255.0), label
+
+
+def get_data_info(info):
+    height, width, channels = info.features["image"].shape
+    num_pixels = height * width * channels
+    num_labels = info.features["label"].num_classes
+    return height, width, channels, num_pixels, num_labels
