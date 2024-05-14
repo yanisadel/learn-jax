@@ -13,7 +13,7 @@ def load_unprocessed_mnist_data():
     return data_train, data_test, info
 
 
-def preprocess_data(img, label):
+def preprocess_sample(img, label):
     return (tf.cast(img, tf.float32) / 255.0), label
 
 
