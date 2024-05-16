@@ -1,4 +1,4 @@
-from typing import Callable, Iterator, List, Tuple
+from typing import Callable, Iterator, List, Optional, Tuple
 
 import jax
 import jaxlib
@@ -17,7 +17,7 @@ def run_train(
     dataset_test: Iterator[Batch],
     num_steps: int,
     validation_step: int,
-    run_neptune: neptune.metadata_containers.run.Run,
+    run_neptune: Optional[neptune.metadata_containers.run.Run] = None,
 ) -> Tuple[TrainingState, Metrics]:
 
     all_metrics: Metrics = {
@@ -48,8 +48,9 @@ def run_train(
         train_loss = jax.device_get(metrics["loss"]).mean()
         train_accuracy = jax.device_get(metrics["accuracy"]).mean()
 
-        run_neptune["train/loss"].log(train_loss, step=step)
-        run_neptune["train/accuracy"].log(train_accuracy, step=step)
+        if run_neptune is not None:
+            run_neptune["train/loss"].log(train_loss, step=step)
+            run_neptune["train/accuracy"].log(train_accuracy, step=step)
 
         all_metrics["train_loss"].append(train_loss)
         all_metrics["train_acc"].append(train_accuracy)
@@ -68,8 +69,9 @@ def run_train(
             test_loss = jax.device_get(metrics["loss"]).mean()
             test_accuracy = jax.device_get(metrics["accuracy"]).mean()
 
-            run_neptune["test/loss"].log(test_loss, step=step)
-            run_neptune["test/accuracy"].log(test_accuracy, step=step)
+            if run_neptune is not None:
+                run_neptune["test/loss"].log(test_loss, step=step)
+                run_neptune["test/accuracy"].log(test_accuracy, step=step)
 
             all_metrics["val_loss"].append(test_loss)
             all_metrics["val_acc"].append(test_accuracy)
