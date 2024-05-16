@@ -18,3 +18,4 @@ class TrainingState(NamedTuple):
 
 
 Metrics: TypeAlias = Dict[str, jnp.ndarray]
+RNGKey: TypeAlias = jnp.ndarray
