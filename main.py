@@ -64,7 +64,7 @@ if __name__ == "__main__":
 
     # Load data
     print("\nLoading data..")
-    data_train = load_mnist_dataset("train", shuffle=True, batch_size=64)
+    data_train = load_mnist_dataset("train", shuffle=True, batch_size=args.batch_size)
     data_test = load_mnist_dataset("test", shuffle=False, batch_size=10000)
 
     # Network
