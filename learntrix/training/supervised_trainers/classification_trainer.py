@@ -17,7 +17,7 @@ class ClassificationTrainer:
             Tuple[jax.Array, Metrics],
         ],
         optimizer: optax.GradientTransformation,
-        num_classes: int,
+        num_classes: int = 2,
     ):
         self._forward_fn = hk.without_apply_rng(hk.transform(forward_fn))
         self._loss_fn = partial(
