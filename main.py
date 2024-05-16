@@ -23,13 +23,13 @@ def get_parser_args() -> argparse.Namespace:
         "--neptune-project",
         type=str,
         help="Neptune project to which the metrics are logged.",
-        default="",
+        default="yanisadel/learn-trix",
     )
-    parser.add_argument("--num-steps", type=int, help="Number of steps", default=10)
-    parser.add_argument("--batch-size", type=int, help="Batch size", default=32)
+    parser.add_argument("--num-steps", type=int, help="Number of steps", default=1000)
+    parser.add_argument("--batch-size", type=int, help="Batch size", default=64)
     parser.add_argument("--lr", type=float, help="Learning rate", default=1e-4)
     parser.add_argument(
-        "--validation-step", type=int, help="Validation step", default=1
+        "--validation-step", type=int, help="Validation step", default=10
     )
     args = parser.parse_args()
     return args
