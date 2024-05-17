@@ -19,6 +19,36 @@ def run_train(
     validation_step: int,
     run_neptune: Optional[neptune.metadata_containers.run.Run] = None,
 ) -> Tuple[TrainingState, Metrics]:
+    """
+    Performs training of a classification model on multiple devices.
+    It is also possible to add validation steps.
+
+    Args:
+        update_fn (Callable[[TrainingState, Batch], Tuple[TrainingState, Metrics]]):
+            Function that updates the parameters for a single batch of data.
+        evaluate_fn (Callable[[TrainingState, Batch], Metrics]): _description_
+            Function that evaluates the model on a batch from the validation set.
+        state (TrainingState):
+            The current TrainingState of the training process.
+        devices (List[jaxlib.xla_extension.Device]):
+            List of devices used for training.
+        dataset_train (Iterator[Batch]):
+            Iterator over batches of training data.
+        dataset_test (Iterator[Batch]):
+            Iterator over batches of validation data.
+        num_steps (int):
+            The number of training steps (i.e. total number of batches used)
+        validation_step (int):
+            Number of steps between validations.
+        run_neptune (Optional[neptune.metadata_containers.run.Run], optional):
+            Neptune runner for logging metrics. Defaults to None.
+
+    Returns:
+        Tuple[TrainingState, Metrics]:
+            - TrainingState: The updated TrainingState of the training process.
+            - Metrics: A Metrics object with loss and accuracy for every step of
+            training and validation
+    """
 
     all_metrics: Metrics = {
         "train_loss": [],
