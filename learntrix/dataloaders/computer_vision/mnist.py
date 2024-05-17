@@ -11,7 +11,17 @@ def load_mnist_dataset(
     shuffle: bool,
     batch_size: int,
 ) -> Iterator[Batch]:
-    """Loads the MNIST dataset."""
+    """
+    Loads the MNIST dataset
+
+    Args:
+        split (str): Either 'train' or 'test'
+        shuffle (bool): Whether to shuffle the data
+        batch_size (int): Size of the batch
+
+    Returns:
+        Iterator[Batch]: Iterator over the MNIST dataset
+    """
     ds, ds_info = tfds.load("mnist:3.*.*", split=split, with_info=True)
     ds.cache()
     if shuffle:
