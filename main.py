@@ -50,17 +50,17 @@ if __name__ == "__main__":
     print(f"\nDetected the following devices: {tuple(devices)}")
 
     # Initializing Neptune
-    run = None
+    run_neptune = None
     if args.neptune_project != "":
         print("\nInitializing Neptune..")
         load_dotenv("./.env")
-        run = neptune.init_run(
+        run_neptune = neptune.init_run(
             project=args.neptune_project,
             api_token=os.getenv("NEPTUNE_API_TOKEN"),
         )
 
         params = {"learning_rate": args.lr, "optimizer": "Adam"}
-        run["parameters"] = params
+        run_neptune["parameters"] = params
 
     # Load data
     print("\nLoading data..")
@@ -109,13 +109,13 @@ if __name__ == "__main__":
         dataset_test=data_test,
         num_steps=args.num_steps,
         validation_step=args.validation_step,
-        run_neptune=run,
+        run_neptune=run_neptune,
     )
 
     print("Training finished")
 
     # Ending Neptune session
-    if run is not None:
+    if run_neptune is not None:
         print("\nEnding Neptune session..")
-        run.stop()
+        run_neptune.stop()
         print("Done")
