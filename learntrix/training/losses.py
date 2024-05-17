@@ -14,7 +14,24 @@ def cross_entropy_loss(
     num_classes: int,
 ) -> Tuple[jax.Array, Metrics]:
     """
-    Cross entropy loss
+    _summary_
+
+    Args:
+        params (hk.Params):
+            Network's parameters
+        batch (Batch):
+            Batch of data (containing samples and associated labels)
+
+        forward_fn (Callable[[hk.Params, jax.Array], jax.Array]):
+            Function that performs the forward pass.
+        num_classes (int):
+            The number of classes in the classificaiton problem. Defaults to 2.
+
+    Returns:
+        Tuple[jax.Array, Metrics]:
+            - jax.Array: loss value
+            - Metrics: A Metrics object with loss and accuracy for the batch
+
     """
     logits = forward_fn(params, batch.image)
     labels = jax.nn.one_hot(batch.label, num_classes)
